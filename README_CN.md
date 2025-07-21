@@ -134,7 +134,7 @@ highlight_matches = true
 
 ### 构建步骤
 ```bash
-git clone https://github.com/kongweiyu/FindEverything.git
+git clone https://github.com/ykcol/FindEverything.git
 cd FindEverything
 cargo build --release
 ```
@@ -163,6 +163,6 @@ build_installer.bat
 
 ## 🔗 相关链接
 
-- **代码仓库**: [GitHub](https://github.com/kongweiyu/FindEverything)
-- **问题反馈**: [报告bug或请求功能](https://github.com/kongweiyu/FindEverything/issues)
-- **版本发布**: [下载最新版本](https://github.com/kongweiyu/FindEverything/releases)
+- **代码仓库**: [GitHub](https://github.com/ykcol/FindEverything)
+- **问题反馈**: [报告bug或请求功能](https://github.com/ykcol/FindEverything/issues)
+- **版本发布**: [下载最新版本](https://github.com/ykcol/FindEverything/releases)

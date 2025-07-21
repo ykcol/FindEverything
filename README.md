@@ -134,7 +134,7 @@ highlight_matches = true
 
 ### Build Steps
 ```bash
-git clone https://github.com/kongweiyu/FindEverything.git
+git clone https://github.com/ykcol/FindEverything.git
 cd FindEverything
 cargo build --release
 ```
@@ -163,6 +163,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE_NEW.t
 
 ## 🔗 Links
 
-- **Repository**: [GitHub](https://github.com/kongweiyu/FindEverything)
-- **Issues**: [Report bugs or request features](https://github.com/kongweiyu/FindEverything/issues)
-- **Releases**: [Download latest version](https://github.com/kongweiyu/FindEverything/releases)
+- **Repository**: [GitHub](https://github.com/ykcol/FindEverything)
+- **Issues**: [Report bugs or request features](https://github.com/ykcol/FindEverything/issues)
+- **Releases**: [Download latest version](https://github.com/ykcol/FindEverything/releases)
