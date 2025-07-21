@@ -77,7 +77,7 @@ FindEverything --respect-gitignore "code" C:\projects
 To build from source, ensure you have Rust installed:
 
 ```
-git clone https://github.com/ykcol/FindEverything.git
+git clone https://github.com/kongweiyu/FindEverything.git
 cd FindEverything
 cargo build --release
 ```

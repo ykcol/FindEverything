@@ -1,0 +1,16 @@
+[search]
+default_search_path = "."
+context_lines = 5
+respect_gitignore = false
+
+[performance]
+cpu_threshold = 80.0
+search_delay_ms = 100
+
+[exclude]
+default_dirs = [".git", "node_modules", "target", ".vscode", ".idea"]
+default_files = []
+
+[display]
+max_line_length = 200
+highlight_matches = true

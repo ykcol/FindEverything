@@ -2,15 +2,8 @@ use std::io::{self, Write};
 use std::time::Instant;
 
 use anyhow::Result;
-use humansize::{format_size, BINARY};
-// 完全移除未使用的导入
 
-use crate::searcher::SearchResult;
-
-/// 格式化文件大小
-pub fn format_file_size(size: u64) -> String {
-    format_size(size, BINARY)
-}
+use crate::domain::search::SearchResult;
 
 /// 格式化持续时间
 pub fn format_duration(duration: std::time::Duration) -> String {
@@ -31,29 +24,47 @@ pub fn format_duration(duration: std::time::Duration) -> String {
 /// 输出搜索结果
 pub fn print_search_result(result: &SearchResult) -> Result<()> {
     let mut stdout = io::stdout().lock();
-    
+
     // 输出文件路径和行号
     writeln!(stdout, "\x1b[1;32m{}\x1b[0m:\x1b[1;34m{}\x1b[0m", result.path, result.line_number)?;
-    
+
+    // 输出上下文行（之前）
+    for (i, context_line) in result.context_before.iter().enumerate() {
+        let line_num = result.line_number - (result.context_before.len() - i) as u64;
+        writeln!(stdout, "\x1b[2;37m{:>6}:\x1b[0m  {}", line_num, context_line)?;
+    }
+
     // 输出匹配行内容，高亮匹配部分
     let line = &result.line;
     let matched_text = &result.matched_text;
-    
+
+    write!(stdout, "\x1b[1;34m{:>6}:\x1b[0m  ", result.line_number)?;
     if let Some(idx) = line.find(matched_text) {
         let before = &line[..idx];
         let after = &line[idx + matched_text.len()..];
         
-        write!(stdout, "  {}", before)?;
+        write!(stdout, "{}", before)?;
         write!(stdout, "\x1b[1;31m{}\x1b[0m", matched_text)?;
         writeln!(stdout, "{}", after)?;
     } else {
-        writeln!(stdout, "  {}", line)?;
+        writeln!(stdout, "{}", line)?;
     }
-    
+
+    // 输出上下文行（之后）
+    for (i, context_line) in result.context_after.iter().enumerate() {
+        let line_num = result.line_number + (i + 1) as u64;
+        writeln!(stdout, "\x1b[2;37m{:>6}:\x1b[0m  {}", line_num, context_line)?;
+    }
+
+    // 如果有上下文行，添加分隔符
+    if !result.context_before.is_empty() || !result.context_after.is_empty() {
+        writeln!(stdout, "\x1b[2;37m--\x1b[0m")?;
+    }
+
     Ok(())
 }
 
-/// 创建搜索摘要
+/// 搜索摘要
 pub struct SearchSummary {
     pub start_time: Instant,
     pub total_files: u64,
@@ -70,18 +81,17 @@ impl SearchSummary {
             total_matches: 0,
         }
     }
-    
+
     pub fn print(&self) -> Result<()> {
         let duration = self.start_time.elapsed();
-        let mut stdout = io::stdout().lock();
         
-        writeln!(stdout, "\n搜索摘要:")?;
-        writeln!(stdout, "----------------------------")?;
-        writeln!(stdout, "总用时: {}", format_duration(duration))?;
-        writeln!(stdout, "扫描文件: {}", self.total_files)?;
-        writeln!(stdout, "匹配文件: {}", self.matched_files)?;
-        writeln!(stdout, "匹配项数: {}", self.total_matches)?;
+        println!("\n搜索摘要:");
+        println!("----------------------------");
+        println!("总用时: {}", format_duration(duration));
+        println!("扫描文件: {}", self.total_files);
+        println!("匹配文件: {}", self.matched_files);
+        println!("匹配项数: {}", self.total_matches);
         
         Ok(())
     }
-} 
+}
