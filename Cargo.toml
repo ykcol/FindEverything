@@ -1,6 +1,6 @@
 [package]
 name = "FindEverything"
-version = "0.1.0"
+version = "0.3.0"
 edition = "2021"
 
 [dependencies]
@@ -30,3 +30,13 @@ crossbeam-channel = "0.5.8"
 
 # 日志相关
 chrono = "0.4.31"
+
+# 配置文件相关
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"
+
+# 系统监控相关
+sysinfo = "0.30"
+
+[dev-dependencies]
+tempfile = "3.8"
